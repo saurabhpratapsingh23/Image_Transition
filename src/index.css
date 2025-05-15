@@ -1,0 +1,344 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-size: 14px;
+  --color-text: #151515;
+  --color-bg: #fff;
+  --color-link: #151515;
+  --color-link-hover: #000000;
+  --color-close: #a22d1d;
+  --page-padding: 1.5rem;
+  --c-gap: 0.5rem;
+  --column: 120px;
+  --column-count: 8;
+  --aspect: 4/5;
+  --font-size-l: 18px;
+  --font-size-xl: clamp(2rem, 10vw, 6rem);
+  --panel-gap: 1rem;
+  --panel-img-size: 90vh;
+}
+
+body {
+  margin: 0;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.2;
+  text-transform: lowercase;
+}
+
+.line {
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+  vertical-align: top;
+}
+
+.line::before {
+  background: currentColor;
+  bottom: 0;
+  content: '';
+  height: 1px;
+  left: 0;
+  position: absolute;
+  transition: transform 0.4s ease;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: right center;
+}
+
+.line:hover::before {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+main {
+  padding: var(--page-padding);
+}
+
+.frame {
+  font-size: var(--font-size-l);
+  font-weight: 500;
+  display: grid;
+  z-index: 1000;
+  width: 100%;
+  position: relative;
+  grid-column-gap: var(--c-gap);
+  grid-row-gap: 0.5rem;
+  pointer-events: none;
+  justify-items: start;
+  grid-template-columns: auto;
+  grid-template-areas:
+    'title'
+    'links'
+    'tags';
+}
+
+.frame a {
+  pointer-events: auto;
+  color: var(--color-text);
+}
+
+.frame__title {
+  font-size: inherit;
+  margin: 0;
+  font-weight: inherit;
+  grid-area: title;
+}
+
+.frame__links {
+  grid-area: links;
+  display: flex;
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 4rem 0 1rem;
+}
+
+.heading:first-child {
+  margin-top: 10rem;
+}
+
+.heading__title {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: var(--font-size-xl);
+  margin: 0;
+  line-height: 0.77;
+}
+
+.heading__meta {
+  font-size: var(--font-size-l);
+  opacity: 0.8;
+}
+
+.heading__meta::after {
+  content: '\00B7';
+  font-family: serif;
+  font-size: 3.5rem;
+  line-height: 0.2;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  display: inline-flex;
+}
+
+.grid-container {
+  padding: 2rem 0;
+}
+
+.effect-section {
+  margin-bottom: 4rem;
+}
+
+.effect-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+  text-transform: uppercase;
+}
+
+.effect-subtitle {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+.grid {
+  padding: 1rem 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-column-gap: var(--c-gap);
+  grid-row-gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.grid__item {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  cursor: pointer;
+  will-change: transform, clip-path;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.grid__item-image {
+  width: 100%;
+  aspect-ratio: var(--aspect);
+  background-size: 100%;
+  background-position: 50% 50%;
+  transition: opacity 0.15s cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+.grid__item:hover .grid__item-image {
+  opacity: 0.8;
+}
+
+.grid__item-caption {
+  padding: 0.5rem 0;
+}
+
+.grid__item-caption h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.grid__item-caption p {
+  font-size: 0.8rem;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: var(--color-bg);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  z-index: 1000;
+  pointer-events: none;
+  padding: var(--page-padding);
+  overflow: hidden;
+}
+
+.panel--open {
+  pointer-events: auto;
+}
+
+.panel__img {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transform-origin: center;
+  max-width: auto;
+  height: 100%;
+  max-height: calc(100vh - 20px);
+  margin: 10px auto;
+}
+
+.panel__content {
+  grid-area: 1 / 1;
+  padding: var(--page-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 1;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.panel__content--left {
+  align-items: flex-start;
+  margin-left: 60%;
+}
+
+.panel__content--right {
+  align-items: flex-end;
+  margin-right: 60%;
+}
+
+.panel__content h3 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.panel__content p {
+  font-size: 1.2rem;
+  margin: 0.5rem 0 0;
+  opacity: 0.8;
+}
+
+.panel__close-btn {
+  position: absolute;
+  top: 2rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid #1bcc0b;
+  color: #1bcc0b;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  z-index: 2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.panel__close-btn:hover {
+  transform: scale(1.1);
+  background: rgba(27, 204, 11, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media screen and (min-width: 65em) {
+  .frame {
+    grid-template-columns: repeat(var(--column-count), minmax(var(--column), 1fr));
+    grid-template-areas: 'title title links links tags tags';
+  }
+}
+
+.footer {
+  padding: 2rem var(--page-padding);
+  background: var(--color-bg);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 4rem;
+}
+
+.footer__content {
+  max-width: 1400px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer__content p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  opacity: 0.8;
+}
+
+.footer__contact {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+}
+
+.footer__link {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.footer__link:hover {
+  opacity: 1;
+}
