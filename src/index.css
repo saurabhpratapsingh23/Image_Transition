@@ -1,3 +1,9 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -29,6 +35,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.2;
   text-transform: lowercase;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-link);
+  outline: none;
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none;
+  color: var(--color-link-hover);
+}
+
+a:focus {
+  outline: none;
+  background: lightgrey;
+}
+
+a:focus:not(:focus-visible) {
+  background: transparent;
+}
+
+a:focus:focus-visible {
+  outline: 2px solid red;
+  background: transparent;
 }
 
 .line {
